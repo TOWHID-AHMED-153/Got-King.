@@ -35,12 +35,12 @@ module.exports = {
   },
 
   sendInfo: async function (message) {
-    const botName = "♡︎𝗠𝗜𝗥𝗔 𝗞𝗜𝗠 𝗥𝗢𝗕𝗢𝗧♡︎";
+    const botName = "♡︎𝐌𝐀𝐒𝐓𝐀𝐑 𝐆𝐀𝐍𝐆 𝐆𝐈𝐑𝐋𝐒♡︎";
     const botPrefix = ".";
-    const authorName = "𝗠𝗥.𝗔𝗬𝗔𝗡";
-    const authorFB = "https://m.me/NOOBS.DEVELOPER.AYAN";
+    const authorName = "𝑴.𝑹.𝑻𝑶𝑼𝑯𝑰𝑫";
+    const authorFB = "https://www.facebook.com/XmaskingNowpara?mibextid=ZbWKwL";
     const authorInsta = "secret";
-    const status = "𝗣𝘂𝗿𝗲 𝗦𝗶𝗻𝗴𝗹𝗲";
+    const status = "𝐕𝐀𝐈 𝐀𝐌𝐈 𝗣𝘂𝗿𝗲 𝗦𝗶𝗻𝗴𝗹𝗲 𝐊𝐄𝐖 𝐌𝐄𝐒𝐒𝐀𝐆𝐄 𝐃𝐄";
 
     const urls = JSON.parse(fs.readFileSync('scripts/cmds/assets/info.json'));
     const link = urls[Math.floor(Math.random() * urls.length)];
