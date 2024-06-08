@@ -16,7 +16,7 @@ module.exports = {
  return message.reply({
  body: `Hello bro\n\nMy prefix is [ . ]\n\n______________________________\n\n𝗛𝗢𝗪 𝗧𝗢 𝗨𝗦𝗘?\nexample please type: .help - to view sure cmds\n.menu\n.info\n.owner\n.ping\n\n𝗕𝗢𝗧 𝗢𝗪𝗡𝗘𝗥: ᴍʀ.ᴛᴏᴜʜɪᴅ ツ\n______________________________
 `,
-  attachment: await global.utils.getStreamFromURL("https://i.postimg.cc/Qxc3t9rz/download.gif")
+  attachment: await global.utils.getStreamFromURL("https://i.imgur.com/03Oc7RL.mp4")
  });
  }
  }
