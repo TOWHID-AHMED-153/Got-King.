@@ -1,51 +1,62 @@
-const axios = require('axios');
-const fs = require('fs-extra');
+const { writeFileSync, existsSync, mkdirSync } = require("fs");
+const { join } = require("path");
+const axios = require("axios");
 const tinyurl = require('tinyurl');
+const fs = require('fs'); 
 
 module.exports = {
- config: {
-  name: "remini",
-  version: "2.2",
-  role: 2,
-  countDown: 3,
-  author: "MR.AYAN",
-  shortDescription: { 
-  en: "( 𝚁𝚎𝚖𝚒𝚗𝚒 )"
-  },
-  category: "𝚗𝚘 𝚙𝚛𝚎𝚏𝚒𝚡",
-  guide: {
-  en: "{p}{n}reply to an image/send a image link"
-    },
-},
-
-  onStart: async function({ api, event, args, message }) {
-    const getImageUrl = () => {
-      if (event.type === "message_reply") {
-        const replyAttachment = event.messageReply.attachments[0];
-        if (["photo", "sticker"].includes(replyAttachment?.type)) {
-          return replyAttachment.url;
-        } else {
-          throw new Error("𝙼𝚞𝚜𝚝 𝚁𝚎𝚙𝚕𝚢 𝚝𝚘 𝚊𝚗 𝚒𝚖𝚊𝚐𝚎.");
-        }
-      } else if (args[0]?.match(/(https?:\/\/.*\.(?:png|jpg|jpeg))/g) || null) {
-        return args[0];
-      } else {
-        throw new Error("𝚁𝚎𝚙𝚕𝚢 𝚝𝚘 𝚊𝚗 𝚒𝚖𝚊𝚐𝚎.");
-      }
-    };
-    const { threadID, messageID } = event;
-    try {
-      const imageUrl = await getImageUrl();
-      const shortUrl = await tinyurl.shorten(imageUrl);
-        message.reply("𝙴𝚗𝚑𝚊𝚗𝚌𝚒𝚗𝚐 𝚢𝚘𝚞𝚛 𝚒𝚖𝚊𝚐𝚎, 𝚙𝚕𝚎𝚊𝚜𝚎 𝚠𝚊𝚒𝚝 𝚊 𝚠𝚑𝚒𝚕𝚎...🖤✨");
-
-    const response = await axios.get(`https://code-merge-api-hazeyy01.replit.app/api/try/remini?url=${encodeURIComponent(shortUrl)}`);
-
-    const processedImageURL = response.data.image_data;
-
-        message.reply({ body: "✨ 𝙴𝚗𝚑𝚊𝚗𝚌𝚎𝚍 𝚂𝚞𝚌𝚌𝚎𝚜𝚜𝚏𝚞𝚕𝚕𝚢...", attachment: await global.utils.getStreamFromURL(processedImageURL) });
-      } catch (error) {
-        message.reply("Error: " + error.message);
-         }
-       }
+  config: {
+    name: "remini",
+    aliases: [],
+    version: "2.0",
+    author: "MR.AYAN",
+    countDown: 20,
+    role: 2,
+    shortDescription: "remini",
+    longDescription: "enhance the image quality",
+    category: "tool",
+    guide: {
+      en: "{p}remini (reply to image)",
     }
+  },
+
+  onStart: async function ({ message, event, api }) {
+    api.setMessageReaction("👀", event.messageID, (err) => {}, true);
+    const { type: a, messageReply: b } = event;
+    const { attachments: c, threadID: d, messageID: e } = b || {};
+
+    if (a === "message_reply" && c) {
+      const [f] = c;
+      const { url: g, type: h } = f || {};
+
+      if (!f || !["photo", "sticker"].includes(h)) {
+        return message.reply("👀 | please Reply to image");
+      }
+
+      try {
+        const i = await tinyurl.shorten(g);
+        const { data: j } = await axios.get(`https://vex-kshitiz.vercel.app/upscale?url=${encodeURIComponent(i)}`, {
+          responseType: "json"
+        });
+
+        const imageUrl = j.result_url;
+        const imageResponse = await axios.get(imageUrl, { responseType: "arraybuffer" });
+
+        const k = join(__dirname, "cache");
+        if (!existsSync(k)) {
+          mkdirSync(k, { recursive: true });
+        }
+
+        const imagePath = join(k, "remi_image.png");
+        writeFileSync(imagePath, imageResponse.data);
+
+        message.reply({ attachment: fs.createReadStream(imagePath) }, d);
+      } catch (m) {
+        console.error(m);
+        message.reply("❌ | Error occurred while enhancing image.");
+      }
+    } else {
+      message.reply("❌ | Please reply to an image.");
+    }
+  }
+};
