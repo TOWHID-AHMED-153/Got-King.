@@ -1,8 +1,8 @@
 module.exports = {
     config: {
-        name: "Touhid",
+        name: "touhid",
         version: "1.0",
-        author: "MR.AYAN", //** original author fb I'd : https://m.me/MR.AYAN.2X **//
+        author: "MR.AYAN", //** original author fb I'd : https://m.me/NOOBS.DEVELOPER.AYAN **//
         countDown: 5,
         role: 0,
         shortDescription: "No Prefix",
@@ -15,6 +15,6 @@ onChat: async function({
     message,
     getLang
 }) {
-    if (event.body && event.body.toLowerCase() == "Touhid") return message.reply("আমাকে বলতে পারেন বস ঘুমাইছে-!!🥀");
+    if (event.body && event.body.toLowerCase() == "touhid") return message.reply("- 𝗠𝘆 𝗯𝗼𝘀𝘀 𝗯𝘂𝘀𝘆 𝗮𝗺𝗸𝗲 𝗯𝗼𝗹𝗲𝗻 𝗸𝗶 𝗵𝗼𝗶𝘀𝗲__😽");
 }
-}; 
+};
