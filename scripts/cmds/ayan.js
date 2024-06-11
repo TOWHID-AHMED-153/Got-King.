@@ -1,6 +1,6 @@
 module.exports = {
     config: {
-        name: "ayan",
+        name: "Touhid",
         version: "1.0",
         author: "MR.AYAN", //** original author fb I'd : https://m.me/MR.AYAN.2X **//
         countDown: 5,
